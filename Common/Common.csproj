@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvManipulation.cs" />
     <Compile Include="CustomException.cs" />
     <Compile Include="DataFormatFault.cs" />
     <Compile Include="DroneSample.cs" />
