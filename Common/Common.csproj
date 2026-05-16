@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CsvManipulation.cs" />
-    <Compile Include="CustomException.cs" />
     <Compile Include="DataFormatFault.cs" />
     <Compile Include="DroneSample.cs" />
     <Compile Include="IDrone.cs" />

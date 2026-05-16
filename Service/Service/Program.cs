@@ -19,8 +19,8 @@ namespace Service
 
             string file = "file";
 
-            TestSimulation test = new TestSimulation();
-            test.Test(file);
+            /*TestSimulation test = new TestSimulation();
+            test.Test(file);*/
 
             host.Close();
             Console.WriteLine("Service has stopped.");
