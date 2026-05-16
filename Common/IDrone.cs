@@ -11,12 +11,18 @@ namespace Common
     public interface IDrone
     {
         [OperationContract]
-        void startSession(string meta);
+        [FaultContract(typeof(ValidationFault))]
+        [FaultContract(typeof(DataFormatFault))]
+        void StartSession(string meta);
 
         [OperationContract]
-        void pushSample(DroneSample sample);
+        [FaultContract(typeof(ValidationFault))]
+        [FaultContract(typeof(DataFormatFault))]
+        void PushSample(DroneSample sample);
 
         [OperationContract]
-        void endSession();
+        [FaultContract(typeof(ValidationFault))]
+        [FaultContract(typeof(DataFormatFault))]
+        void EndSession();
     }
 }

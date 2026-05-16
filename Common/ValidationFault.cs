@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Common
 {
     [DataContract]
-    public class ValidationFault : Exception
+    public class ValidationFault
     {
         [DataMember]
         public string message { get; set; } 

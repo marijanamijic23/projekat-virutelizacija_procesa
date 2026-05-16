@@ -15,11 +15,11 @@ namespace Common
         double linearAccelerationZ;
         double windSpeed;
         double windAngle;
-        DateTime time;
+        double time;
 
-        public DroneSample() : this(0, 0, 0, 0, 0, DateTime.Now) { }
+        public DroneSample() : this(0, 0, 0, 0, 0, 0) { }
 
-        public DroneSample(double linearAccelerationX, double linearAccelerationY, double linearAccelerationZ, double windSpeed, double windAngle, DateTime time)
+        public DroneSample(double linearAccelerationX, double linearAccelerationY, double linearAccelerationZ, double windSpeed, double windAngle, double time)
         {
             this.linearAccelerationX = linearAccelerationX;
             this.linearAccelerationY = linearAccelerationY;
@@ -40,7 +40,7 @@ namespace Common
         [DataMember]
         public double WindAngle { get => windAngle; set => windAngle = value; }
         [DataMember]
-        public DateTime Time { get => time; set => time = value; }
+        public double Time { get => time; set => time = value; }
 
         public override string ToString()
         {

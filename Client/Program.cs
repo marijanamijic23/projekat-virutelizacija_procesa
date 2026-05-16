@@ -20,30 +20,44 @@ namespace Client
             CsvManipulation log = new CsvManipulation("log.txt");
 
             string tekst = csv.ReadAllText();
-            string[] niz = tekst.Split('\n');
-            sam.startSession("3.csv");
+            string[] array = tekst.Split('\n');
+            DroneSample sample = new DroneSample();
+            string meta = array[0];
+            sam.StartSession(meta);
             for (int i = 1; i <= 110; i++)
             {
                 try
                 {
-                    string red = niz[i];
-                    string[] reci = red.Split(',');
+                    string red = array[i];
+                    string[] words = red.Split(',');
                     DroneSample droneSample = new DroneSample();
-                    droneSample.LinearAccelerationX = double.Parse(reci[18], CultureInfo.InvariantCulture);
-                    droneSample.LinearAccelerationY = double.Parse(reci[19], CultureInfo.InvariantCulture);
-                    droneSample.LinearAccelerationZ = double.Parse(reci[20], CultureInfo.InvariantCulture);
-                    droneSample.WindSpeed = double.Parse(reci[1], CultureInfo.InvariantCulture);
-                    droneSample.WindAngle = double.Parse(reci[2], CultureInfo.InvariantCulture);
-                    droneSample.Time = DateTime.Parse(reci[0]);
-                    sam.pushSample(droneSample);
+                    if (!string.IsNullOrEmpty(words[18]))droneSample.LinearAccelerationX = double.Parse(words[18], CultureInfo.InvariantCulture);
+                    if (!string.IsNullOrEmpty(words[19])) droneSample.LinearAccelerationY = double.Parse(words[19], CultureInfo.InvariantCulture);
+                    if (!string.IsNullOrEmpty(words[20])) droneSample.LinearAccelerationZ = double.Parse(words[20], CultureInfo.InvariantCulture);
+                    if (!string.IsNullOrEmpty(words[1])) droneSample.WindSpeed = double.Parse(words[1], CultureInfo.InvariantCulture);
+                    if (!string.IsNullOrEmpty(words[2])) droneSample.WindAngle = double.Parse(words[2], CultureInfo.InvariantCulture);
+                    if (!string.IsNullOrEmpty(words[0])) droneSample.Time = double.Parse(words[0], CultureInfo.InvariantCulture);
+                    sam.PushSample(droneSample);
                 }
-                catch
+                catch (FaultException<ValidationFault> ex)
                 {
-                    log.AddTextToFile("Greska u redu:" + i);
+                    log.AddTextToFile(ex.Detail.message);
+                }
+                catch (FaultException<DataFormatFault> ex)
+                {
+                    log.AddTextToFile(ex.Detail.message);
+                }
+                catch (FaultException ex)
+                {
+                    log.AddTextToFile(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    log.AddTextToFile(ex.Message);
                 }
             }
 
-            sam.endSession();
+            sam.EndSession();
             Console.ReadKey();
         }
     }

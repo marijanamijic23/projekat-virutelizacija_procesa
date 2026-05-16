@@ -22,9 +22,9 @@ namespace Service
                     sample.LinearAccelerationZ = 15;
                     sample.WindAngle = 90;
                     sample.WindSpeed = -77;
-                    sample.Time = DateTime.Now;
-                    droneService.startSession(path);
-                    droneService.pushSample(sample);
+                    sample.Time = 1.5;
+                    droneService.StartSession(path);
+                    droneService.PushSample(sample);
                 }
                 catch
                 {

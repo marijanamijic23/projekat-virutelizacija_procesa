@@ -15,69 +15,70 @@ namespace Service
     public class DroneService : IDrone
     {
         SessionStatus status = SessionStatus.IDLE;
-        public void startSession(string meta)
+        public void StartSession(string meta)
         {
             if (meta == null || meta == "")
             {
                 throw new FaultException<DataFormatFault>(
-                    new DataFormatFault { message = "Naziv fajla ne postoji!"}
+                    new DataFormatFault { message = "Naziv fajla ne postoji!\n"},
+                    new FaultReason("Validation fault")
                 );
             }
             if(status == SessionStatus.IN_PROGRESS)
             {
                 throw new FaultException<ValidationFault>(
-                    new ValidationFault { message = "Sesija je vec pokrenuta!"}
+                    new ValidationFault { message = "Sesija je vec pokrenuta!\n"},
+                    new FaultReason("Validation fault")
                 );
             }
 
             status = SessionStatus.IN_PROGRESS;
-            Console.WriteLine($"Sesija se pokrece, {status}");
+            Console.WriteLine($"Sesija se pokrece, {status}\n");
+            string[] words = meta.Split(',');
+            Console.WriteLine($"{words[18]},{words[19]},{words[20]},{words[1]},{words[2]},{words[0]}\n");
         }
 
-        public void pushSample(DroneSample sample)
+        public void PushSample(DroneSample sample)
         {
-            if(status != SessionStatus.IN_PROGRESS)
+            if (status != SessionStatus.IN_PROGRESS)
             {
                 throw new FaultException<ValidationFault>(
-                    new ValidationFault { message = "Status mora biti IN_PROGRESS!"}
+                    new ValidationFault { message = "Status mora biti IN_PROGRESS!\n" },
+                    new FaultReason("Validation fault")
                 );
             }
 
             if(sample.WindSpeed <= 0)
             {
                 throw new FaultException<ValidationFault>(
-                    new ValidationFault { message = "Wind speed mora biti vrednost veca od 0!" }
+                    new ValidationFault { message = "Wind speed mora biti vrednost veca od 0!\n" },
+                    new FaultReason("Validation fault")
                 );
             }
 
             if(sample.WindAngle < 0 || sample.WindAngle > 360)
             {
                 throw new FaultException<ValidationFault>(
-                    new ValidationFault { message = "Vrednost za wind angel izlazi iz dozvoljenog opsega!" }
+                    new ValidationFault { message = "Vrednost za wind angel izlazi iz dozvoljenog opsega!\n" },
+                    new FaultReason("Validation fault")
                 );
             }
 
-            if(sample.Time == null)
-            {
-                throw new FaultException<DataFormatFault>(
-                    new DataFormatFault { message = "Vrednost za datum mora postojati!" }
-                );
-            }
-
-            Console.WriteLine($"Primljen uzorak: LinearAccelerationX={sample.LinearAccelerationX}, LinearAccelerationY={sample.LinearAccelerationY}, LinearAccelerationZ={sample.LinearAccelerationZ}, WindSpeed={sample.WindSpeed}, WindAngle={sample.WindAngle}, Time={sample.Time}");
+            Console.WriteLine($"Primljen uzorak: LinearAccelerationX={sample.LinearAccelerationX}, LinearAccelerationY={sample.LinearAccelerationY}, LinearAccelerationZ={sample.LinearAccelerationZ}, WindSpeed={sample.WindSpeed}, WindAngle={sample.WindAngle}, Time={sample.Time}\n");
         }
 
-        public void endSession()
+        public void EndSession()
         {
             if(status != SessionStatus.IN_PROGRESS)
             {
                 throw new FaultException<ValidationFault>(
-                    new ValidationFault { message = "Sesija nije pokrenuta!"}
+                    new ValidationFault { message = "Sesija nije pokrenuta!\n" },
+                    new FaultReason("Validation fault")
                 );
             }
 
             status = SessionStatus.COMPLETED;
-            Console.WriteLine($"Sesija zavrsava {status}");
+            Console.WriteLine($"Sesija zavrsava {status}\n");
         }
 
 
