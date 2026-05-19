@@ -15,15 +15,16 @@ namespace Service
             host.Open();
 
             Console.WriteLine("Service is running. Press any key to stop.");
-            Console.ReadKey();
 
             string file = "file";
 
             /*TestSimulation test = new TestSimulation();
             test.Test(file);*/
 
+            Console.ReadKey();
             host.Close();
             Console.WriteLine("Service has stopped.");
+            
         }
     }
 }

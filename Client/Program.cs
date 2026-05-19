@@ -14,51 +14,52 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            ChannelFactory<IDrone> drone = new ChannelFactory<IDrone>("DroneTcpBinding");
-            IDrone sam = drone.CreateChannel();
+
+            ChannelFactory<IDroneService> drone = new ChannelFactory<IDroneService>("DroneTcpBinding");
+            IDroneService sam = drone.CreateChannel();
             CsvManipulation csv = new CsvManipulation("3.csv");
             CsvManipulation log = new CsvManipulation("log.txt");
 
-            string tekst = csv.ReadAllText();
-            string[] array = tekst.Split('\n');
+            string text = csv.ReadAllText();
+            string[] array = text.Split('\n');
             DroneSample sample = new DroneSample();
-            string meta = array[0];
-            sam.StartSession(meta);
-            for (int i = 1; i <= 110; i++)
+            try
             {
-                try
+                string meta = array[0];
+                //string meta = "";
+                //string meta = null;
+                sam.StartSession(meta);
+                for (int i = 1; i <= 110; i++)
                 {
-                    string red = array[i];
-                    string[] words = red.Split(',');
+                    string line = array[i];
                     DroneSample droneSample = new DroneSample();
-                    if (!string.IsNullOrEmpty(words[18]))droneSample.LinearAccelerationX = double.Parse(words[18], CultureInfo.InvariantCulture);
-                    if (!string.IsNullOrEmpty(words[19])) droneSample.LinearAccelerationY = double.Parse(words[19], CultureInfo.InvariantCulture);
-                    if (!string.IsNullOrEmpty(words[20])) droneSample.LinearAccelerationZ = double.Parse(words[20], CultureInfo.InvariantCulture);
-                    if (!string.IsNullOrEmpty(words[1])) droneSample.WindSpeed = double.Parse(words[1], CultureInfo.InvariantCulture);
-                    if (!string.IsNullOrEmpty(words[2])) droneSample.WindAngle = double.Parse(words[2], CultureInfo.InvariantCulture);
-                    if (!string.IsNullOrEmpty(words[0])) droneSample.Time = double.Parse(words[0], CultureInfo.InvariantCulture);
-                    sam.PushSample(droneSample);
-                }
-                catch (FaultException<ValidationFault> ex)
-                {
-                    log.AddTextToFile(ex.Detail.message);
-                }
-                catch (FaultException<DataFormatFault> ex)
-                {
-                    log.AddTextToFile(ex.Detail.message);
-                }
-                catch (FaultException ex)
-                {
-                    log.AddTextToFile(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    log.AddTextToFile(ex.Message);
-                }
-            }
+                    try
+                    {
 
-            sam.EndSession();
-            Console.ReadKey();
+
+                        string[] words = line.Split(',');
+                        if (!string.IsNullOrEmpty(words[18])) droneSample.LinearAccelerationX = double.Parse(words[18], CultureInfo.InvariantCulture);
+                        if (!string.IsNullOrEmpty(words[19])) droneSample.LinearAccelerationY = double.Parse(words[19], CultureInfo.InvariantCulture);
+                        if (!string.IsNullOrEmpty(words[20])) droneSample.LinearAccelerationZ = double.Parse(words[20], CultureInfo.InvariantCulture);
+                        if (!string.IsNullOrEmpty(words[1])) droneSample.WindSpeed = double.Parse(words[1], CultureInfo.InvariantCulture);
+                        if (!string.IsNullOrEmpty(words[2])) droneSample.WindAngle = double.Parse(words[2], CultureInfo.InvariantCulture);
+                        if (!string.IsNullOrEmpty(words[0])) droneSample.Time = double.Parse(words[0], CultureInfo.InvariantCulture);
+                        sam.PushSample(droneSample);
+                    }
+                    catch (FaultException<ValidationFault> ex)
+                    {
+                        log.AddTextToFile($"ERROR -> X:{droneSample.LinearAccelerationX}, Y:{droneSample.LinearAccelerationY}, Z:{droneSample.LinearAccelerationZ}, WindSpeed:{droneSample.WindSpeed}, WindAngle:{droneSample.WindAngle}, Time:{droneSample.Time} | {ex.Detail.message}");
+                    }
+
+                }
+
+                sam.EndSession();
+                Console.ReadKey();
+            }
+            catch (FaultException<DataFormatFault> ex)
+            {
+                log.AddTextToFile(ex.Detail.message);
+            }
         }
     }
 }

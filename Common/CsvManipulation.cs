@@ -50,13 +50,9 @@ namespace Service
 
         public void AddTextToFile(string text)
         {
-            /*streamWriter = File.AppendText(path);
+            streamWriter = File.AppendText(path);
             streamWriter.WriteLine(text);
-            streamWriter.Close();*/
-            using (StreamWriter sw = File.AppendText(path))
-            {
-                sw.WriteLine(text);
-            }
+            streamWriter.Close();
         }
 
         public string ReadAllText()

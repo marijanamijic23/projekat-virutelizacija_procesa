@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace Common
 {
     [ServiceContract]
-    public interface IDrone
+    public interface IDroneService
     {
         [OperationContract]
         [FaultContract(typeof(ValidationFault))]

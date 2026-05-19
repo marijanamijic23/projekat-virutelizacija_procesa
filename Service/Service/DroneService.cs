@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Service
 {
     
-    public class DroneService : IDrone
+    public class DroneService : IDroneService
     {
         SessionStatus status = SessionStatus.IDLE;
         public void StartSession(string meta)
@@ -21,7 +21,7 @@ namespace Service
             {
                 throw new FaultException<DataFormatFault>(
                     new DataFormatFault { message = "Naziv fajla ne postoji!\n"},
-                    new FaultReason("Validation fault")
+                    new FaultReason("Data Format Fault")
                 );
             }
             if(status == SessionStatus.IN_PROGRESS)
@@ -35,7 +35,7 @@ namespace Service
             status = SessionStatus.IN_PROGRESS;
             Console.WriteLine($"Sesija se pokrece, {status}\n");
             string[] words = meta.Split(',');
-            Console.WriteLine($"{words[18]},{words[19]},{words[20]},{words[1]},{words[2]},{words[0]}\n");
+            Console.WriteLine($"{words[18]} {words[19]} {words[20]} {words[1]} {words[2]} {words[0]}\n");
         }
 
         public void PushSample(DroneSample sample)
