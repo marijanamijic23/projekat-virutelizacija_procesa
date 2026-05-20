@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="E:/M/OneDrive/Desktop/Virtuelizacija procesa/Client/Client.csproj" Id="0626629a-b25e-4dbd-8871-effa8c642762" />
-  <Project Path="E:/M/OneDrive/Desktop/Virtuelizacija procesa/Common/Common.csproj" Id="8d82bca7-4eac-4735-9e9b-12a9bacd3c47" />
-  <Project Path="E:/M/OneDrive/Desktop/Virtuelizacija procesa/Service/Service/Service.csproj" Id="0c4f2aa4-0509-4ffa-9936-f176f281d34e" />
+  <Project Path="../Client/Client.csproj" />
+  <Project Path="../Common/Common.csproj" />
+  <Project Path="Service/Service.csproj" />
 </Solution>
