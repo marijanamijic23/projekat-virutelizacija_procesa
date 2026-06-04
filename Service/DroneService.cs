@@ -143,6 +143,23 @@ namespace Service
                 }
             }
 
+            double Wkinetic = 0.5 * sample.WindSpeed*sample.WindSpeed;
+
+            if(Wkinetic > double.Parse(ConfigurationManager.AppSettings["W_threshold"], CultureInfo.InvariantCulture))
+            {
+                if (WarningRaisedEvent != null)
+                {
+                    WarningRaisedEvent("WindEnergySpike - ispod očekivanog");
+                }
+            }
+            else if(Wkinetic < double.Parse(ConfigurationManager.AppSettings["W_threshold"], CultureInfo.InvariantCulture))
+            {
+                if (WarningRaisedEvent != null)
+                {
+                    WarningRaisedEvent("WindEnergySpike - iznad očekivanog");
+                }
+            }
+
             prevAz = sample.LinearAccelerationZ;
         }
 
