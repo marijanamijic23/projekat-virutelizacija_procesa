@@ -11,7 +11,15 @@ namespace Service
     {
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(DroneService));
+            DroneService droneService = new DroneService();
+            Listener listener = new Listener();
+            ServiceHost host = new ServiceHost(droneService);
+
+            droneService.transferStartedEvent += listener.OnTransferStarted;
+            droneService.SampleReceivedEvent += listener.OnSampleReceived;
+            droneService.transferCompletedEvent += listener.OnTransferCompleted;
+            droneService.WarningRaisedEvent += listener.OnWarningRaised;
+
             host.Open();
 
             Console.WriteLine("Service is running. Press any key to stop.");
