@@ -29,6 +29,7 @@ namespace Client
                 //string meta = "";
                 //string meta = null;
                 sam.StartSession(meta);
+                Console.WriteLine("Sesija pokrenuta, slanje podataka...");
                 for (int i = 1; i <= 110; i++)
                 {
                     string line = array[i];

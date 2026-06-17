@@ -10,6 +10,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.IO;
 
 namespace Service
 {
@@ -54,10 +55,13 @@ namespace Service
             sessionData.SessionFilePath = "measurements_session.csv";
             sessionData.RejectsFilePath = "rejected.csv";
 
+            File.WriteAllText("measurements_session.csv", string.Empty);
+            File.WriteAllText("rejected.csv", string.Empty);
+
             csvSession = new CsvManipulation(sessionData.SessionFilePath);
             csvRejects = new CsvManipulation(sessionData.RejectsFilePath);
 
-            if(transferStartedEvent != null)
+            if (transferStartedEvent != null)
             {
                 transferStartedEvent();
             }
