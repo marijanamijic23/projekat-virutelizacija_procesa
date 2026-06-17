@@ -149,13 +149,6 @@ namespace Service
             {
                 if (WarningRaisedEvent != null)
                 {
-                    WarningRaisedEvent("WindEnergySpike - ispod očekivanog");
-                }
-            }
-            else if(Wkinetic < double.Parse(ConfigurationManager.AppSettings["W_threshold"], CultureInfo.InvariantCulture))
-            {
-                if (WarningRaisedEvent != null)
-                {
                     WarningRaisedEvent("WindEnergySpike - iznad očekivanog");
                 }
             }
